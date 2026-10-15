@@ -2,7 +2,7 @@
 
 **Trust-Calibrated VLA Policy Post-Training with Evolving Imagination · CoRL 2026**
 
-[Project page](https://li-wenzhan.github.io/MERL-project/) · [Research implementation](https://github.com/li-wenzhan/MERL) · [arXiv](https://arxiv.org/abs/2610.16517) · [Camera-Ready PDF](assets/documents/MERL_CoRL2026.pdf)
+[Project page](https://merl-project.github.io/) · [Research implementation](https://github.com/li-wenzhan/MERL) · [arXiv](https://arxiv.org/abs/2610.16517) · [Camera-Ready PDF](assets/documents/MERL_CoRL2026.pdf)
 
 This repository contains the English academic project website. The policy-training implementation lives in the separate [MERL repository](https://github.com/li-wenzhan/MERL).
 
@@ -55,7 +55,7 @@ The optional Python preparation utilities reuse the authors’ presentation and 
 
 The deployment workflow targets the `main` branch. In the repository’s **Settings → Pages**, select **GitHub Actions** as the publishing source. A push to `main` then runs verification, builds `dist/` and deploys the resulting artifact.
 
-The expected URL is `https://li-wenzhan.github.io/MERL-project/`. If the repository name or domain changes, update the canonical URL, Open Graph URLs, JSON-LD, `sitemap.xml`, `robots.txt`, BibTeX and this README. Relative media paths need no prefix changes.
+The public site is `https://merl-project.github.io/`, hosted by the `MERL-project` organization in `MERL-project/MERL-project.github.io`. The organization is managed through the existing author account. If the repository name or domain changes, update the canonical URL, Open Graph URLs, JSON-LD, `sitemap.xml`, `robots.txt`, BibTeX and this README. Relative media paths need no prefix changes.
 
 ## Research assets and rights
 

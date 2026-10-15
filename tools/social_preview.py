@@ -28,7 +28,7 @@ draw.text((52,99),'MERL.',font=f(104),fill='#291c32',stroke_width=0)
 for i,line in enumerate(['Trust-Calibrated VLA','Policy Post-Training','with Evolving Imagination']):
     draw.text((58,250+i*47),line,font=f(31),fill='#92278f' if i==2 else '#291c32')
 draw.text((59,452),'Learning to trust imagination.',font=f(19),fill='#8b6e96')
-draw.text((59,565),'li-wenzhan.github.io/MERL-project',font=f(15),fill='#8b6e96')
+draw.text((59,565),'merl-project.github.io',font=f(15),fill='#8b6e96')
 frame=Image.open(root/'assets/images/block-merl.webp').convert('RGB')
 frame.thumbnail((510,287),Image.Resampling.LANCZOS)
 panel=Image.new('RGB',(534,390),'white');d=ImageDraw.Draw(panel)
