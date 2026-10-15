@@ -30,7 +30,7 @@ npm run preview
 - A two-level trust explorer: global loss mixture/horizon and local replay probability/loss weight.
 - Original simulator predictions with a sampled-frame selector.
 - Same-protocol result comparisons, component ablations, uncertainty bars and original learning curves.
-- Two physical-robot tasks with paired play/pause and matched effective playback speed.
+- Eight physical-robot rollouts across two tasks and four comparisons, all visible in a compact gallery, with pair/all playback, an enlarged video viewer and matched effective playback speed.
 - Paper, implementation and poster links; copyable BibTeX.
 - Responsive layouts, local fonts, reduced-motion support and an Open Graph preview.
 
@@ -62,3 +62,5 @@ The expected URL is `https://li-wenzhan.github.io/MERL-project/`. If the reposit
 Figures, video clips and paper materials belong to their respective research authors. Institutional marks retain their original artwork and ownership. Manrope and IBM Plex Mono are distributed with their SIL Open Font License files in `assets/fonts/`. No blanket license over third-party or research assets is implied by this website repository.
 
 See [asset notes](docs/ASSETS.md) for media treatment and playback conventions.
+
+To prepare just the robot clips from the original presentation, run `python tools/prepare_robot_videos.py`. Add `--only-missing` to retain existing web encodings. The script verifies frame counts, frame rates and durations, and writes `assets/videos/robot-demos.json`; the website check verifies all eight gallery entries against that manifest.

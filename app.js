@@ -228,22 +228,32 @@
     },{threshold:.2}).observe(hero);
   }
 
-  const baseline = $('#baseline-video'), ours = $('#merl-video'), comparisonButton = $('#play-comparison');
-  const videoPair = [baseline,ours];
-  function enforceRates() {baseline.playbackRate=2/3;ours.playbackRate=1;}
-  function updateComparisonButton() {
-    const playing=videoPair.some(video => !video.paused && !video.ended);
-    comparisonButton.querySelector('span').textContent = playing ? 'Pause both' : 'Play both · 2× equivalent';
-    comparisonButton.querySelector('use').setAttribute('href',playing ? '#i-pause' : '#i-play');
+  const robotVideos = $$('[data-robot-video]'), allDemosButton = $('#play-all-demos');
+  const pairControls = $$('[data-play-pair]').map(button => ({
+    button, videos: robotVideos.filter(video => video.dataset.pair === button.dataset.playPair)
+  }));
+  const demoButtons = [allDemosButton,...pairControls.map(pair => pair.button)];
+  let galleryRequest = 0;
+  const isPlaying = video => !video.paused && !video.ended;
+  function enforceDemoRate(video) {
+    // The second MERL lid clip also has a baked-in 3x mark: rates are per clip.
+    const target = 2 / Number(video.dataset.sourceSpeed);
+    if (Math.abs(video.playbackRate-target) > .0001) video.playbackRate = target;
   }
-  for (const video of videoPair) {
-    ['play','pause','ended'].forEach(event => video.addEventListener(event,updateComparisonButton));
-    video.addEventListener('loadedmetadata', enforceRates);
-    video.addEventListener('play', enforceRates);
-    video.addEventListener('ratechange', () => {
-      const target=video===baseline?2/3:1;
-      if(Math.abs(video.playbackRate-target)>.0001)video.playbackRate=target;
-    });
+  function updateDemoButton(button, videos, all = false) {
+    const playing = videos.some(isPlaying);
+    button.querySelector('span').textContent = all ? (playing ? 'Pause all' : 'Play all 8') : (playing ? 'Pause pair' : 'Play pair');
+    button.querySelector('use').setAttribute('href', playing ? '#i-pause' : '#i-play');
+    button.setAttribute('aria-label', all ? `${playing ? 'Pause' : 'Play'} all eight robot demos` : `${playing ? 'Pause' : 'Play'} ${button.dataset.pairLabel} comparison`);
+  }
+  function updateDemoButtons() {
+    updateDemoButton(allDemosButton, robotVideos, true);
+    pairControls.forEach(({button,videos}) => updateDemoButton(button,videos));
+  }
+  for (const video of robotVideos) {
+    ['play','pause','ended'].forEach(event => video.addEventListener(event,updateDemoButtons));
+    ['loadedmetadata','play','ratechange'].forEach(event => video.addEventListener(event,() => enforceDemoRate(video)));
+    enforceDemoRate(video);
   }
   function metadataReady(video) {
     if(video.readyState>=1)return Promise.resolve();
@@ -254,33 +264,50 @@
       video.addEventListener('loadedmetadata',loaded,{once:true});video.addEventListener('error',failed,{once:true});video.load();
     });
   }
-  comparisonButton.addEventListener('click',async () => {
-    if(videoPair.some(video=>!video.paused&&!video.ended)){videoPair.forEach(video=>video.pause());return;}
-    comparisonButton.disabled=true;
+  async function toggleDemos(videos) {
+    if (videos.some(isPlaying)) {videos.forEach(video => video.pause());return;}
+    const request = ++galleryRequest;
+    demoButtons.forEach(button => {button.disabled = true;});
     try {
-      await Promise.all(videoPair.map(metadataReady));
-      videoPair.forEach(video=>{video.currentTime=0;});enforceRates();
-      await Promise.all(videoPair.map(video=>video.play()));
-    } catch {videoPair.forEach(video=>video.pause());announce('The video comparison could not start. Try the individual video controls.');}
-    finally {comparisonButton.disabled=false;updateComparisonButton();}
-  });
-  $$('[data-task]').forEach(button => button.addEventListener('click', () => {
-    const task=button.dataset.task;
-    videoPair.forEach(video=>video.pause());
-    baseline.poster=`assets/images/${task}-baseline.webp`;ours.poster=`assets/images/${task}-merl.webp`;
-    baseline.src=`assets/videos/${task}-baseline.mp4`;ours.src=`assets/videos/${task}-merl.mp4`;
-    baseline.load();ours.load();enforceRates();
-    const taskName=task==='block'?'Block-to-Box':'Lid-to-Pot';
-    baseline.setAttribute('aria-label',`Baseline ${taskName} physical robot example, normalized to two times effective speed`);
-    ours.setAttribute('aria-label',`MERL-Full ${taskName} physical robot example at two times speed`);
-    $('#robot-instruction').textContent=task==='block'?'“Put the block into the box.”':'“Put the lid onto the pot.”';
-    $('#robot-success').textContent=task==='block'?'17 / 20 successful evaluation trials':'15 / 20 successful evaluation trials';
-    $$('[data-task]').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
-    updateComparisonButton();
+      await Promise.all(videos.map(metadataReady));
+      if (request !== galleryRequest || document.hidden) return;
+      videos.forEach(video => {video.currentTime = 0;enforceDemoRate(video);});
+      await Promise.all(videos.map(video => video.play()));
+    } catch {
+      videos.forEach(video => video.pause());
+      announce('The robot demos could not start. Try the individual video controls.');
+    } finally {
+      demoButtons.forEach(button => {button.disabled = false;});
+      updateDemoButtons();
+    }
+  }
+  allDemosButton.addEventListener('click',() => toggleDemos(robotVideos));
+  pairControls.forEach(({button,videos}) => button.addEventListener('click',() => toggleDemos(videos)));
+  const videoDialog = $('#video-dialog');
+  let expandedVideo = null, originalVideoSlot = null;
+  $$('[data-expand-video]').forEach(button => button.addEventListener('click',() => {
+    const video = document.getElementById(button.dataset.expandVideo);
+    const card = video.closest('.robot-card');
+    $('#video-dialog-title').textContent = `${card.querySelector('.robot-label>span').textContent.trim()} · ${card.closest('.robot-comparison').querySelector('h4').textContent.trim()}`;
+    robotVideos.filter(other => other !== video).forEach(other => other.pause());
+    originalVideoSlot = video.parentElement;
+    originalVideoSlot.classList.add('video-is-expanded');
+    expandedVideo = video;
+    $('#video-dialog-stage').append(video);
+    videoDialog.showModal();
   }));
-  enforceRates();
+  $('#close-video-dialog').addEventListener('click',() => videoDialog.close());
+  videoDialog.addEventListener('click',event => {if(event.target === videoDialog)videoDialog.close();});
+  videoDialog.addEventListener('close',() => {
+    if (!expandedVideo) return;
+    expandedVideo.pause();
+    originalVideoSlot.prepend(expandedVideo);
+    originalVideoSlot.classList.remove('video-is-expanded');
+    expandedVideo = null;originalVideoSlot = null;
+  });
+  updateDemoButtons();
   document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){hero.pause();videoPair.forEach(video=>video.pause());}
+    if(document.hidden){galleryRequest++;hero.pause();robotVideos.forEach(video=>video.pause());}
     else if(heroVisible&&!heroUserPaused&&!reducedMotion.matches&&!navigator.connection?.saveData){hero.play().catch(()=>{});}
   });
   reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)hero.pause();});
@@ -300,7 +327,7 @@
   $$('.figure-open').forEach(button=>button.addEventListener('click',()=>{
     $('#dialog-image').src=button.dataset.image;$('#dialog-image').alt=button.dataset.title;$('#figure-dialog-title').textContent=button.dataset.title;figureDialog.showModal();
   }));
-  $('.dialog-close').addEventListener('click',()=>figureDialog.close());
+  figureDialog.querySelector('.dialog-close').addEventListener('click',()=>figureDialog.close());
   figureDialog.addEventListener('click',event=>{if(event.target===figureDialog){const r=figureDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)figureDialog.close();}});
 
   if('IntersectionObserver' in window){

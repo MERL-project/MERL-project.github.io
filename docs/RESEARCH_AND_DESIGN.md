@@ -21,7 +21,7 @@ The narrative follows deployment shift → uneven simulator reliability → two-
 
 No new training run or independent replication was performed for the website. Table 1 point estimates and Table 2 multi-seed uncertainty must remain distinct. WMPO/WoVR are same-protocol adaptations. S2T-H measures refinement stages under matched grounded budgets, not wall-clock or total-compute speedup.
 
-The physical study uses fixed-data offline refinement from 50 demonstrations/task and 20 closed-loop evaluation trials/task. It does not establish online physical RL. Full MERL and MERL-Visual confidence intervals overlap; the study does not resolve a proxy-only gain. The baseline method in the video source is unspecified and is therefore not named as a particular quantitative control.
+The physical study uses fixed-data offline refinement from 50 demonstrations/task and 20 closed-loop evaluation trials/task. It does not establish online physical RL. Full MERL and MERL-Visual confidence intervals overlap; the study does not resolve a proxy-only gain. Slides 9–10 of the original presentation identify the video baseline as Online-Updated MBRL. The gallery includes all eight original clips: red/blue blocks and two lid placements, each with a baseline/MERL pair. These qualitative examples do not add evaluation trials or establish execution-time differences. Per-clip source overlays determine playback normalization; the second MERL lid clip is marked 3×, unlike the other three MERL clips marked 2×.
 
 ## Mechanism explorer
 

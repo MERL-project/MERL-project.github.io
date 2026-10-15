@@ -2,6 +2,18 @@
 
 Local review performed on 2026-10-15 (Asia/Shanghai).
 
+## Eight-clip gallery update
+
+- All eight source videos were extracted from the original presentation. Slide positions and actual source frames establish the four baseline/MERL pairings and per-clip speed overlays.
+- Original and web-encoded frame counts, frame rates and video durations match. The four existing web encodings retain their previous SHA-256 hashes; four new clips add approximately 12.13 MB.
+- Browser playback checks pass for all four pairs and for all eight clips together. Every video decodes at 1280 × 720 and plays at 2× equivalent physical speed, including media8 with its original 3× overlay. Changing native playback rate restores the stated comparison convention.
+- Individual playback updates the pair/all control states. Enlarged playback retains a tested five-second position; Escape and the close button restore the original player. Figure-dialog closing is separately scoped to preserve the existing figure viewer.
+- Measured layouts at 1440, 768, 390 and 320 CSS pixels have no horizontal overflow. All eight clips remain exposed in the page, with four columns on desktop and two on mobile.
+- Before interaction, no gallery MP4 requests were made. The reduced-motion hero behavior remains intact. No JavaScript page errors occurred during the gallery tests.
+- The gallery's automated screenshot capture timed out in the background browser task. The updated layout was checked through browser DOM measurements and interaction tests; the visual screenshots described below belong to the initial site review.
+
+The following checks describe the initial site baseline; the gallery-specific checks above supersede its original four-clip comparison behavior.
+
 ## Automated and browser checks
 
 - Static build succeeds with Node and no installed npm dependencies.

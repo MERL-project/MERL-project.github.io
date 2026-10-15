@@ -4,12 +4,10 @@ import hashlib
 import json
 import os
 import shutil
-import subprocess
-import zipfile
-import xml.etree.ElementTree as ET
 
 import pymupdf
-from PIL import Image, ImageOps, ImageDraw
+from PIL import Image
+from prepare_robot_videos import prepare_robot_videos
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent
@@ -64,36 +62,7 @@ for family in ['grounded','frozen','updated']:
         source=SOURCE/'MERL_ppt_CN'/'assets'/'talk_v2'/f'{family}_{n}.png'
         web_image(source,f'{family}-{n}.webp',720)
 
-# Extract videos directly from their original presentation archive.
-# Original slide notes identify media1/media5 as baselines, media2/media6 as MERL.
-original = SOURCE/'MERL介绍_东方理工大学交流_CN.pptx'
-media_map = [('media1.mp4','block-baseline'),('media2.mp4','block-merl'),
-             ('media5.mp4','lid-baseline'),('media6.mp4','lid-merl')]
-raw = QA/'extracted_video'
-raw.mkdir(exist_ok=True)
-contact = Image.new('RGB',(960,600),'#faf8fb')
-draw=ImageDraw.Draw(contact)
-with zipfile.ZipFile(original) as archive:
-    for idx,(filename,slug) in enumerate(media_map):
-        extracted=raw/filename
-        extracted.write_bytes(archive.read('ppt/media/'+filename))
-        # Confirm that the reusable PPT assets are the same original media.
-        prior=SOURCE/'MERL_ppt_CN'/'assets'/'talk_v2'/filename
-        if prior.exists():
-            assert hashlib.sha256(prior.read_bytes()).digest()==hashlib.sha256(extracted.read_bytes()).digest(),filename
-        target=ASSETS/'videos'/f'{slug}.mp4'
-        subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(extracted),'-an',
-                        '-vf','scale=1280:-2','-c:v','libx264','-preset','medium','-crf','23',
-                        '-pix_fmt','yuv420p','-movflags','+faststart',str(target)],check=True)
-        # Transcoding preserves the source timestamps and its baked-in 2x mark.
-        record(original,target,f'Extract ppt/media/{filename}; H.264; max width 1280; muted; original timing and speed overlay retained (baseline 3x; MERL 2x)')
-        poster_file=ASSETS/'images'/f'{slug}.webp'
-        subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-ss','3','-i',str(target),
-                        '-frames:v','1','-quality','92',str(poster_file)],check=True)
-        image=Image.open(poster_file).convert('RGB')
-        image.thumbnail((460,260))
-        x=(idx%2)*480+10;y=(idx//2)*300+28
-        contact.paste(image,(x,y));draw.text((x,y-20),slug,fill='#321937')
-contact.save(QA/'video_contact_sheet.jpg',quality=92)
+# Prepare every original clip, including the second color and second placement.
+provenance.extend(prepare_robot_videos())
 (QA/'asset_provenance.json').write_text(json.dumps(provenance,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({'assets':len(provenance),'total_MB':round(sum(f.stat().st_size for f in ASSETS.rglob('*') if f.is_file())/1e6,2)}))
