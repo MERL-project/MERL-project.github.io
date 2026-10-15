@@ -1,0 +1,9 @@
+dist/
+node_modules/
+qa/
+tmp/
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+tools/github_manage.py

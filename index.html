@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f7fb">
+  <meta name="description" content="MERL: Trust-Calibrated VLA Policy Post-Training with Evolving Imagination. Two-level trust turns evolving world-model imagination into a resource for robot policy learning. CoRL 2026.">
+  <title>MERL · Trust-Calibrated VLA Policy Post-Training · CoRL 2026</title>
+  <link rel="canonical" href="https://li-wenzhan.github.io/MERL-project/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MERL · Learning to trust imagination">
+  <meta property="og:description" content="Trust-Calibrated VLA Policy Post-Training with Evolving Imagination · CoRL 2026">
+  <meta property="og:url" content="https://li-wenzhan.github.io/MERL-project/">
+  <meta property="og:image" content="https://li-wenzhan.github.io/MERL-project/assets/images/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/merl-mark.svg">
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Trust-Calibrated VLA Policy Post-Training with Evolving Imagination","name":"MERL","author":[{"@type":"Person","name":"Wenzhan Li"},{"@type":"Person","name":"Yiran Qin"},{"@type":"Person","name":"Heng Zhou"},{"@type":"Person","name":"Huirui Wang"},{"@type":"Person","name":"Yulan Guo"},{"@type":"Person","name":"Ruimao Zhang"}],"url":"https://li-wenzhan.github.io/MERL-project/","sameAs":"https://arxiv.org/abs/2610.16517","identifier":{"@type":"PropertyValue","propertyID":"arXiv","value":"2610.16517"},"isAccessibleForFree":true,"encoding":{"@type":"MediaObject","contentUrl":"https://li-wenzhan.github.io/MERL-project/assets/documents/MERL_CoRL2026.pdf","encodingFormat":"application/pdf"}}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="i-paper" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8l-5-5Zm0 0v5h5M8 12h8m-8 4h8"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 13 8-13 8Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v12h5"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  </defs></svg>
+
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="wordmark" href="#" aria-label="MERL home"><img src="assets/brand/merl-mark.svg" width="31" height="31" alt=""><span>MERL<span class="wordmark-dot">.</span></span><span class="nav-edition">CoRL 2026</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span></button>
+      <nav id="nav-links" aria-label="Main navigation">
+        <a href="#method">Method</a><a href="#trust">Trust lab</a><a href="#results">Results</a><a href="#robots">Robot demos</a>
+        <a class="nav-paper" href="https://arxiv.org/abs/2610.16517" target="_blank" rel="noopener">Read paper <svg class="icon"><use href="#i-up"/></svg></a>
+      </nav>
+    </div>
+    <div class="reading-progress" aria-hidden="true"></div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="paper-title">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <svg class="hero-field" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><linearGradient id="field-gradient"><stop stop-color="#92278f" stop-opacity="0"/><stop offset=".5" stop-color="#c82e70" stop-opacity=".4"/><stop offset="1" stop-color="#dc864b" stop-opacity=".15"/></linearGradient></defs>
+        <g fill="none" stroke="url(#field-gradient)"><path d="M-120 700C180 200 540 1050 1000 430S1390 160 1740 300"/><path d="M-120 725C180 250 570 1000 1010 460S1410 180 1740 345"/><path d="M-120 750C180 300 600 950 1020 490S1430 200 1740 390"/><path d="M-120 775C180 350 630 900 1030 520S1450 220 1740 435"/></g>
+        <g fill="#c82e70" opacity=".4"><circle cx="1020" cy="490" r="4"/><circle cx="1370" cy="292" r="3"/><circle cx="430" cy="671" r="3"/></g>
+      </svg>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span> MODEL-EVOLVING REINFORCEMENT LEARNING</div>
+          <div class="hero-name">MERL<span class="hero-period">.</span><span class="conference-pill">CoRL 2026</span></div>
+          <h1 id="paper-title">Trust-Calibrated VLA<br class="desktop-br"> Policy Post-Training<br class="desktop-br"> with <span class="gradient-text">Evolving Imagination</span></h1>
+          <p class="hero-takeaway">A world model can imagine. <br>MERL learns <strong>how much to trust it.</strong></p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://arxiv.org/abs/2610.16517" target="_blank" rel="noopener"><svg class="icon"><use href="#i-paper"/></svg> arXiv <svg class="icon small"><use href="#i-up"/></svg></a>
+            <a class="button secondary" href="https://github.com/li-wenzhan/MERL" target="_blank" rel="noopener"><svg class="icon"><use href="#i-code"/></svg> Code</a>
+            <a class="text-link" href="#robots">Watch robots <svg class="icon small"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-orbit orbit-one" aria-hidden="true"></div><div class="visual-orbit orbit-two" aria-hidden="true"></div>
+          <div class="demo-window">
+            <div class="window-bar"><span class="window-dots"><i></i><i></i><i></i></span><span>FROM IMAGINATION TO ACTION</span><span class="tiny-tag">PiPER X</span></div>
+            <div class="hero-video-wrap">
+              <video id="hero-video" class="hero-video" muted loop playsinline preload="none" poster="assets/images/block-merl.webp" data-src="assets/videos/block-merl.mp4" aria-label="MERL-Full physical robot places a block into a box, source playback at two times speed"></video>
+              <div class="video-overlay"><span><i></i> MERL-Full · Physical rollout</span><button id="hero-toggle" class="icon-button" aria-label="Play hero demo"><svg class="icon"><use href="#i-play"/></svg></button></div>
+            </div>
+            <div class="visual-caption"><span>“Put the block into the box.”</span><span class="mono">2× playback</span></div>
+            <div class="mini-loop" aria-label="Grounded experience, calibrated imagination, policy improvement">
+              <span><i class="ground-dot"></i> Ground</span><svg class="icon"><use href="#i-arrow"/></svg><span class="highlight"><i class="trust-dot"></i> Calibrate</span><svg class="icon"><use href="#i-arrow"/></svg><span><i class="imagine-dot"></i> Improve</span>
+            </div>
+          </div>
+          <a class="visual-footnote" href="#trust"><span class="spark">✦</span> Imagination, with a reliability check. <svg class="icon small"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+      <div class="container authors-block">
+        <p class="authors"><a href="https://github.com/li-wenzhan" target="_blank" rel="noopener">Wenzhan Li<sup>1,2</sup></a><span>Yiran Qin<sup>3,4,5</sup></span><span>Heng Zhou<sup>4,6</sup></span><span>Huirui Wang<sup>1</sup></span><span>Yulan Guo<sup>1,2</sup></span><a href="mailto:zhangrm27@mail.sysu.edu.cn">Ruimao Zhang<sup>1,*</sup></a></p>
+        <div class="affiliations"><span><sup>1</sup> Sun Yat-sen University</span><span><sup>2</sup> Shenzhen Loop Area Institute</span><span><sup>3</sup> The Chinese University of Hong Kong, Shenzhen</span><span><sup>4</sup> Shanghai AI Laboratory</span><span><sup>5</sup> University of Oxford</span><span><sup>6</sup> University of Science and Technology of China</span></div>
+        <div class="institution-logos" aria-label="Affiliated institutions, in paper order">
+          <img src="assets/brand/sysu_white.png" alt="Sun Yat-sen University" width="140" height="42"><img src="assets/brand/slai_white.png" alt="Shenzhen Loop Area Institute" width="145" height="42"><img src="assets/brand/cuhk_white.png" alt="The Chinese University of Hong Kong, Shenzhen" width="83" height="42"><img src="assets/brand/shlab.webp" alt="Shanghai AI Laboratory" width="145" height="42"><img src="assets/brand/oxford_logo.svg" alt="University of Oxford" width="101" height="42"><img src="assets/brand/ustc.png" alt="University of Science and Technology of China" width="145" height="42">
+        </div>
+      </div>
+    </section>
+
+    <div class="metrics-strip">
+      <div class="container metrics-grid">
+        <div><span class="metric-number">79.7<span>%</span></span><p>Average success on LIBERO-PRO<span>Four suites · three training seeds</span></p></div>
+        <div><span class="metric-number">10.9<span>%</span></span><p>Fewer high-threshold refinement stages<span>Compared with the matched model-free control</span></p></div>
+        <div><span class="metric-number">80.0<span>%</span></span><p>Observed physical-robot success<span>32 / 40 trials · two tasks · fixed-data adaptation</span></p></div>
+      </div>
+    </div>
+
+    <section id="insight" class="section insight-section">
+      <div class="container">
+        <div class="section-kicker"><span>01 / THE INSIGHT</span><span>BEYOND SIMULATOR UPDATES</span></div>
+        <div class="section-intro reveal"><h2>Better imagination.<br><span class="muted">More deliberate learning.</span></h2><p>Deployment shifts beyond the demonstrations. A world model offers imagined experience, but even an updated simulator produces uneven predictions. <strong>Reliability should decide how imagination enters policy learning.</strong></p></div>
+        <div class="paradigms reveal">
+          <div class="paradigm"><span class="paradigm-index">01</span><h3>Model-free RL</h3><div class="paradigm-flow"><span class="blue-chip">Environment</span><span>→</span><span>Policy</span></div><p>Grounded feedback.<br>Interaction intensive.</p><span class="paradigm-result">77.2% <small>Avg. SR</small></span></div>
+          <div class="paradigm"><span class="paradigm-index">02</span><h3>Static model-based RL</h3><div class="paradigm-flow"><span class="orange-chip">Frozen simulator</span><span>→</span><span>Policy</span></div><p>Additional imagination.<br>The simulator can become stale.</p><span class="paradigm-result">73.3% <small>Avg. SR</small></span></div>
+          <div class="paradigm"><span class="paradigm-index">03</span><h3>Online-updated MBRL</h3><div class="paradigm-flow"><span class="orange-chip">Updated simulator</span><span>→</span><span>Policy</span></div><p>Adapting predictions.<br>Fixed use and uniform replay.</p><span class="paradigm-result">76.2% <small>Avg. SR</small></span></div>
+          <div class="paradigm merl-paradigm"><span class="paradigm-index">04 / MERL</span><h3>Trust-calibrated RL</h3><div class="paradigm-flow"><span class="orange-chip">Evolve</span><span>→</span><span class="pink-chip">Calibrate</span><span>→</span><span>Learn</span></div><p>Adapt the simulator.<br>Calibrate its learning influence.</p><span class="paradigm-result">79.7% <small>Avg. SR</small></span></div>
+        </div>
+        <p class="figure-note">Matched refinement controls on LIBERO-PRO (paper, Table 1). Model-based controls also use grounded data. Values are reported point estimates.</p>
+      </div>
+    </section>
+
+    <section id="method" class="section method-section">
+      <div class="container">
+        <div class="section-kicker"><span>02 / THE METHOD</span><span>EVOLVE → CALIBRATE → REFINE</span></div>
+        <div class="section-intro reveal"><h2>One loop.<br><span class="gradient-text">Four trust decisions.</span></h2><p>Model-Evolving Reinforcement Learning couples an evolving simulator with two levels of reliability control. Explore a refinement stage below.</p></div>
+        <div class="method-explorer reveal">
+          <div class="pipeline-tabs" role="tablist" aria-label="MERL refinement stages">
+            <button id="step-0" class="pipeline-step active" role="tab" aria-selected="true" aria-controls="method-panel" data-step="0"><span class="step-number">01</span><strong>Ground</strong><span>Collect experience</span></button>
+            <button id="step-1" class="pipeline-step" role="tab" aria-selected="false" aria-controls="method-panel" data-step="1" tabindex="-1"><span class="step-number">02</span><strong>Evolve &amp; calibrate</strong><span>Update the simulator</span></button>
+            <button id="step-2" class="pipeline-step" role="tab" aria-selected="false" aria-controls="method-panel" data-step="2" tabindex="-1"><span class="step-number">03</span><strong>Schedule</strong><span>Stage-level trust</span></button>
+            <button id="step-3" class="pipeline-step" role="tab" aria-selected="false" aria-controls="method-panel" data-step="3" tabindex="-1"><span class="step-number">04</span><strong>Select &amp; weight</strong><span>Chunk-level trust</span></button>
+            <button id="step-4" class="pipeline-step" role="tab" aria-selected="false" aria-controls="method-panel" data-step="4" tabindex="-1"><span class="step-number">05</span><strong>Refine</strong><span>Mixed policy update</span></button>
+          </div>
+          <div id="method-panel" class="method-panel" role="tabpanel" aria-labelledby="step-0" tabindex="0">
+            <div class="method-description"><span id="method-tag" class="eyebrow">01 / GROUNDED EXPERIENCE</span><h3 id="method-title">Start with what the environment tells you.</h3><p id="method-copy">The VLA policy executes action chunks and records observations, commands and sparse terminal success. These grounded trajectories support both policy learning and simulator adaptation.</p><p id="method-detail" class="method-detail">Each policy call decodes categorical tokens into up to 8 steps of 7D continuous actions.</p></div>
+            <div class="method-art" aria-hidden="true"><div class="art-orbit"></div><div class="art-core"><span id="art-symbol">π</span><small id="art-name">VLA POLICY</small></div><div class="art-node node-top"><span id="art-input">RGB + language</span><i></i></div><div class="art-node node-bottom"><i></i><span id="art-output">Grounded trajectories</span></div><span class="art-label" id="art-label">Observe · act · record</span></div>
+          </div>
+          <div class="four-decisions"><span>Stage-level <strong>ρ</strong> How much?</span><span>Stage-level <strong>h</strong> How far?</span><span>Chunk-level <strong>p</strong> Which chunks?</span><span>Chunk-level <strong>w</strong> How much influence?</span></div>
+        </div>
+        <details class="full-method"><summary><span><svg class="icon"><use href="#i-expand"/></svg> See the complete method figure</span><span class="summary-plus">+</span></summary><figure><button class="figure-open" data-image="assets/images/method.webp" data-title="The complete MERL refinement pipeline" aria-label="Enlarge complete MERL method figure"><img src="assets/images/method.webp" alt="Five-module MERL pipeline: grounded rollout, stored-action calibration, stage scheduling, residual-scored chunk replay, and mixed policy optimization" loading="lazy" width="2800" height="1451"></button><figcaption>Calibration reuses stored action continuations. Recursive chunk scoring uses a frozen residual predictor without querying future ground truth. The simulator, proxy and predictor stay frozen during imagination and policy optimization.</figcaption></figure></details>
+      </div>
+    </section>
+
+    <section id="trust" class="section trust-section">
+      <div class="container">
+        <div class="section-kicker"><span>03 / THE TRUST LAB</span><span>AN INTERACTIVE EXPLANATION</span></div>
+        <div class="section-intro reveal"><h2>Give imagination<br><span class="light-gradient">the influence it earns.</span></h2><p>Stage-level trust sets the global imagination budget. Chunk-level trust controls local selection and influence. Change the inputs to see the two mechanisms at work.</p></div>
+        <div class="trust-lab reveal">
+          <div class="lab-tabs" role="tablist" aria-label="Trust mechanism"><button id="stage-tab" role="tab" aria-selected="true" aria-controls="stage-panel" class="active" data-lab="stage">Stage-level <span>ρ · h</span></button><button id="chunk-tab" role="tab" aria-selected="false" aria-controls="chunk-panel" tabindex="-1" data-lab="chunk">Chunk-level <span>p · w</span></button></div>
+          <div id="stage-panel" class="lab-panel" role="tabpanel" aria-labelledby="stage-tab">
+            <div class="lab-controls"><span class="lab-label">GLOBAL SCHEDULING</span><h3>How much? <br>How far?</h3><p>Higher estimated simulator error gives imagined experience less influence and a shorter rollout.</p><div class="slider-label"><label for="stage-error">Normalized smoothed error <span class="math">ε̃ / ε<sub>ref</sub></span></label><output id="stage-error-value" for="stage-error">1.00</output></div><input type="range" id="stage-error" min="0" max="4" step="0.05" value="1" aria-describedby="stage-input-note"><div class="range-ends"><span>Lower error</span><span>Higher error</span></div><p class="lab-input-note" id="stage-input-note">Illustrative input to the paper’s schedule; κ = 1. This is a mechanism explanation, not a measured training trace.</p></div>
+            <div class="lab-output"><div class="output-heading"><span class="lab-label">POLICY-LOSS MIXTURE</span><span class="output-symbol">ρ<sub>s</sub> = <output id="rho-value">0.500</output></span></div><div class="mixture-bar"><div id="grounded-share" class="grounded-share"><span>Grounded <b>50.0%</b></span></div><div id="imagined-share" class="imagined-share"><span>Imagined <b>50.0%</b></span></div></div><div class="formula">ℒ<sub>MERL</sub> = (1 − ρ<sub>s</sub>) ℒ<sub>grounded</sub> + ρ<sub>s</sub> ℒ<sub>imagined</sub></div><div class="horizon-heading"><span class="lab-label">IMAGINATION HORIZON</span><span><output id="horizon-value">20</output> <small>environment steps</small></span></div><div id="horizon-track" class="horizon-track" aria-hidden="true"></div><div class="horizon-scale"><span>0</span><span>8</span><span>16</span><span>24</span><span>32</span></div><p class="lab-output-note"><span id="horizon-chunks">2.5</span> action-chunk equivalents · C = 8<br>ρ is a loss coefficient; it does not specify the fraction of collected samples.</p></div>
+          </div>
+          <div id="chunk-panel" class="lab-panel" role="tabpanel" aria-labelledby="chunk-tab" hidden>
+            <div class="lab-controls"><span class="lab-label">LOCAL REPLAY CONTROL</span><h3>Which chunks? <br>How much influence?</h3><p>Sampling probability <strong>p</strong> decides how often a chunk is selected. Optimization weight <strong>w</strong> scales its influence after selection.</p><label class="toggle-row" for="trust-enabled"><input id="trust-enabled" type="checkbox" checked><span class="switch" aria-hidden="true"></span> Apply chunk-level trust</label><p class="lab-input-note">Four illustrative chunk errors. Priorities use (ε + 0.001)<sup>−1</sup>; weights use max(0.05, exp(−ε)), matching the public configuration.</p></div>
+            <div class="lab-output"><div class="chunk-column-head"><span>CANDIDATE / ERROR</span><span>SAMPLING p</span><span>WEIGHT w</span></div><div id="chunk-rows" class="chunk-rows"></div><p class="lab-output-note">Lower error earns more replay probability and greater loss weight. These example errors are explanatory inputs, not experimental observations.</p></div>
+          </div>
+          <div class="lab-bottom"><span><i class="small-diamond"></i> Estimated reliability guides learning; it does not certify a physically correct future.</span><a href="https://github.com/li-wenzhan/MERL/blob/main/docs/no_oracle_trust.md" target="_blank" rel="noopener">Implementation <svg class="icon small"><use href="#i-up"/></svg></a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="imagination" class="section imagination-section">
+      <div class="container">
+        <div class="section-kicker"><span>04 / LOOK INSIDE IMAGINATION</span><span>SIMULATOR EVOLUTION</span></div>
+        <div class="section-intro reveal"><h2>Same rollout condition.<br><span class="muted">Different predicted futures.</span></h2><p>Online updates bring predictions closer to the observed trajectory. Average quality improves, while reliability can still vary from chunk to chunk.</p></div>
+        <div class="prediction-viewer reveal">
+          <div class="prediction-toolbar"><span>Prediction inspector</span><div class="frame-picker" role="group" aria-label="Select a sampled prediction frame"><button data-frame="0" aria-pressed="false">01</button><button data-frame="2" aria-pressed="false">03</button><button data-frame="4" aria-pressed="false">05</button><button class="active" data-frame="7" aria-pressed="true">08</button></div><span class="mono" id="frame-label">Sampled frame 08 / 08</span></div>
+          <div class="prediction-grid"><figure><div class="prediction-name"><i class="ground-dot"></i><span>Ground truth</span><small>Observed future</small></div><img id="prediction-grounded" src="assets/images/grounded-7.webp" alt="Ground-truth frame 8 in the supplied simulator comparison" loading="lazy" width="512" height="512"></figure><figure><div class="prediction-name"><i class="frozen-dot"></i><span>Frozen simulator</span><small>Static-MBRL</small></div><img id="prediction-frozen" src="assets/images/frozen-7.webp" alt="Frozen-simulator prediction at frame 8" loading="lazy" width="512" height="512"></figure><figure class="evolving-figure"><div class="prediction-name"><i class="trust-dot"></i><span>Evolving simulator</span><small>Online updated</small></div><img id="prediction-updated" src="assets/images/updated-7.webp" alt="Evolving-simulator prediction at frame 8" loading="lazy" width="512" height="512"></figure></div>
+          <p class="figure-note">Selected original frames from the paper’s qualitative simulator comparison (Appendix D). Frame numbers indicate positions in the displayed sequence, not elapsed environment steps.</p>
+          <div class="sim-diagnostics"><span>Held-out simulator diagnostics</span><div><small>PSNR ↑</small><span>22.4 <i>→</i> <b>25.9</b></span></div><div><small>LPIPS ↓</small><span>0.238 <i>→</i> <b>0.171</b></span></div><div><small>Proxy MAE ↓</small><span>0.183 <i>→</i> <b>0.126</b></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section results-section">
+      <div class="container">
+        <div class="section-kicker"><span>05 / THE EVIDENCE</span><span>LIBERO-PRO · FOUR SUITES</span></div>
+        <div class="section-intro reveal"><h2>Trust makes<br><span class="gradient-text">imagination more useful.</span></h2><p>Higher final success and faster high-threshold refinement under shared grounded budgets. Tasks preserve their semantics while deployment conditions change.</p></div>
+        <div class="results-board reveal">
+          <div class="results-toolbar"><div class="segmented" role="group" aria-label="Comparison group"><button class="active" data-comparison="external" aria-pressed="true">Same-protocol methods</button><button data-comparison="ablation" aria-pressed="false">Component ablation</button></div><div class="metric-picker" role="group" aria-label="Result metric"><button class="active" data-metric="sr" aria-pressed="true">Success ↑</button><button data-metric="auc" aria-pressed="false">AUC ↑</button><button data-metric="s2t" aria-pressed="false">Stages ↓</button></div></div>
+          <div class="chart-heading"><h3 id="chart-title">Average success rate</h3><span id="chart-statistic">Mean ± standard deviation · 3 training seeds</span></div>
+          <div id="result-chart" class="result-chart" role="img" aria-label="Average success rates across same-protocol methods"></div>
+          <div class="chart-scale" aria-hidden="true"><span>0</span><span id="chart-mid">50</span><span id="chart-max">100%</span></div>
+          <p id="result-note" class="figure-note">† WMPO and WoVR are adapted to the same training and evaluation protocol; each WoVR seed uses an independent simulator. Paper, Table 2.</p>
+          <details class="results-details"><summary>All reported metrics <span>+</span></summary><div class="table-scroll"><table id="result-table"><caption class="sr-only">Complete results for the selected comparison group</caption><thead><tr><th scope="col">Method</th><th scope="col">Avg. SR (%) ↑</th><th scope="col">AUC ↑</th><th scope="col">S2T-H ↓</th></tr></thead><tbody></tbody></table></div></details>
+        </div>
+        <div class="learning-curves reveal"><figure><button class="figure-open" data-image="assets/images/goal-learning.webp" data-title="LIBERO-PRO Goal learning curve" aria-label="Enlarge Goal learning curve"><img src="assets/images/goal-learning.webp" alt="Original paper learning curve comparing success over training stages on LIBERO-PRO Goal" width="1800" height="1523" loading="lazy"></button><figcaption>LIBERO-PRO Goal</figcaption></figure><figure><button class="figure-open" data-image="assets/images/long-learning.webp" data-title="LIBERO-PRO Long learning curve" aria-label="Enlarge Long learning curve"><img src="assets/images/long-learning.webp" alt="Original paper learning curve comparing success over training stages on LIBERO-PRO Long" width="1800" height="1523" loading="lazy"></button><figcaption>LIBERO-PRO Long</figcaption></figure></div>
+        <p class="figure-note">Original learning curves. AUC is normalized learning-curve area. S2T-H averages stages to 80% success on Spatial/Object/Goal and 65% on Long. Each stage permits six grounded trajectories and at most 3,072 transitions. Simulator updates and imagination add model computation; these stage counts are not wall-clock speedups.</p>
+        <div class="no-oracle-note reveal"><div><span class="eyebrow">SCORING RECURSIVE IMAGINATION</span><h3>Useful trust estimates.<br>No future-state query.</h3></div><p>A frozen residual predictor scores unpaired recursive chunks. At depths 2–4, held-out validation reports <strong>Pearson r = 0.68</strong> and <strong>Rank-AUC = 0.80</strong> over 1,500 chunks. Accuracy weakens at deeper horizons.</p><a class="text-link" href="assets/documents/MERL_CoRL2026.pdf#page=27" target="_blank" rel="noopener">Read the validation <svg class="icon small"><use href="#i-up"/></svg></a></div>
+      </div>
+    </section>
+
+    <section id="robots" class="section robots-section">
+      <div class="container">
+        <div class="section-kicker"><span>06 / ON THE PHYSICAL ROBOT</span><span>AGILEX PiPER X</span></div>
+        <div class="section-intro reveal"><h2>Imagination in training.<br><span class="light-gradient">Actions in the real world.</span></h2><p>Fixed-data refinement from 50 demonstrations per task, followed by closed-loop evaluation on held-out placements and colors. No additional physical training rollouts.</p></div>
+        <div class="robot-showcase reveal">
+          <div class="robot-toolbar"><div class="segmented dark-segmented" role="group" aria-label="Physical robot task"><button class="active" data-task="block" aria-pressed="true">Block-to-Box</button><button data-task="lid" aria-pressed="false">Lid-to-Pot</button></div><button id="play-comparison" class="button small-button"><svg class="icon"><use href="#i-play"/></svg><span>Play both · 2× equivalent</span></button></div>
+          <p class="robot-instruction" id="robot-instruction">“Put the block into the box.”</p>
+          <div class="robot-video-grid"><figure><div class="robot-label"><span>Baseline example</span><small>Source overlay: 3×</small></div><video id="baseline-video" controls muted playsinline preload="none" poster="assets/images/block-baseline.webp" aria-label="Baseline Block-to-Box physical robot example, normalized to two times effective speed"><source src="assets/videos/block-baseline.mp4" type="video/mp4">Your browser does not support HTML video.</video><figcaption>Baseline rollout</figcaption></figure><figure class="ours-video"><div class="robot-label"><span><i class="status-dot"></i> MERL-Full</span><small>Source overlay: 2×</small></div><video id="merl-video" controls muted playsinline preload="none" poster="assets/images/block-merl.webp" aria-label="MERL-Full Block-to-Box physical robot example at two times speed"><source src="assets/videos/block-merl.mp4" type="video/mp4">Your browser does not support HTML video.</video><figcaption id="robot-success">17 / 20 successful evaluation trials</figcaption></figure></div>
+          <p class="robot-playback-note">Both players use <strong>2× equivalent physical-time playback</strong>: the baseline’s original 3× clip is slowed to ⅔ speed; MERL’s 2× clip plays unchanged. These are separate qualitative trials, not a controlled execution-time comparison. The source does not identify the baseline variant.</p>
+        </div>
+        <div class="physical-summary"><div><strong>80.0<span>%</span></strong><span>MERL-Full · 32 / 40 successes<br>95% CI [65.2, 89.5]</span></div><p><b>Block-to-Box: 17 / 20</b><b>Lid-to-Pot: 15 / 20</b><span>MERL-Visual achieves 77.5% (31 / 40). Overlapping confidence intervals do not resolve a proxy-only gain.</span></p><a class="text-link" href="assets/documents/MERL_CoRL2026.pdf#page=29" target="_blank" rel="noopener">Evaluation protocol <svg class="icon small"><use href="#i-up"/></svg></a></div>
+      </div>
+    </section>
+
+    <section id="resources" class="section resources-section">
+      <div class="container">
+        <div class="section-kicker"><span>07 / EXPLORE THE WORK</span><span>READ · REPRODUCE · CITE</span></div>
+        <div class="resources-heading reveal"><h2>Take a closer look.</h2><p>Research materials and the implementation, in one place.</p></div>
+        <div class="resource-links reveal"><a href="https://arxiv.org/abs/2610.16517" target="_blank" rel="noopener"><svg class="icon"><use href="#i-paper"/></svg><span>Read the paper<small>arXiv:2610.16517</small></span><svg class="icon"><use href="#i-up"/></svg></a><a href="https://github.com/li-wenzhan/MERL" target="_blank" rel="noopener"><svg class="icon"><use href="#i-code"/></svg><span>Explore the code<small>Training, evaluation &amp; documentation</small></span><svg class="icon"><use href="#i-up"/></svg></a><a href="assets/documents/MERL_Poster.pdf" target="_blank" rel="noopener"><svg class="icon"><use href="#i-expand"/></svg><span>View the poster<small>English research overview</small></span><svg class="icon"><use href="#i-up"/></svg></a></div>
+        <p class="paper-download"><a href="assets/documents/MERL_CoRL2026.pdf" target="_blank" rel="noopener">Camera-Ready PDF <span>31 pages</span> <svg class="icon small"><use href="#i-up"/></svg></a></p>
+        <details class="abstract-details"><summary>Abstract <span>+</span></summary><p>Vision-Language-Action (VLA) models are often pretrained via imitation learning, making reinforcement learning (RL) post-training important when deployment moves beyond demonstration coverage. Existing refinement paradigms expose a reliability–efficiency tension: model-free refinement avoids simulator bias but is interaction-intensive, whereas model-based refinement can exploit unreliable imagination even as its simulator adapts. We propose Model-Evolving Reinforcement Learning (MERL), a trust-calibrated framework that couples policy optimization with an online-updated simulator comprising a world model and a reward proxy head. Across stages, simulator reliability controls the imagined-data ratio and rollout horizon; within rollouts, chunk-level trust controls replay selection and optimization weight. For recursive imagination without exact grounded continuations, a residual predictor estimates trust without querying future ground truth. On perturbed LIBERO-PRO tasks, MERL reaches 79.7% average success, improves high-threshold learning speed by 10.9% over the matched model-free control, and outperforms same-protocol external baselines across three training seeds. Fixed-data adaptation from 50 demonstrations per task achieves 80.0% average success on two physical-robot tasks.</p></details>
+        <details class="abstract-details"><summary>Scope &amp; limitations <span>+</span></summary><p>MERL is evaluated with tokenized VLA policies on structured tabletop tasks and fixed RGB sensing. LIBERO-PRO perturbations preserve task semantics; these results do not establish broad new-task learning. Predictive trust depends on calibration coverage and becomes less accurate at deeper horizons. Simulator updates add computation. Physical experiments cover two tasks using offline refinement and do not establish online physical RL.</p></details>
+        <div id="citation" class="citation-block reveal"><div class="citation-header"><div><span class="eyebrow">BIBTEX</span><h3>Build on this work.</h3></div><button id="copy-citation" class="button secondary"><svg class="icon"><use href="#i-copy"/></svg><span>Copy citation</span></button></div><pre id="bibtex" tabindex="0">@misc{li2026merl,
+  title     = {Trust-Calibrated VLA Policy Post-Training
+               with Evolving Imagination},
+  author    = {Wenzhan Li and Yiran Qin and Heng Zhou and
+               Huirui Wang and Yulan Guo and Ruimao Zhang},
+  year      = {2026},
+  eprint    = {2610.16517},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO},
+  url       = {https://arxiv.org/abs/2610.16517}
+}</pre></div>
+        <div class="end-note"><img src="assets/brand/merl-mark.svg" width="40" height="40" alt=""><p>Update the simulator.<br><strong>Calibrate how its imagination shapes learning.</strong></p><a href="#main" aria-label="Back to top">Back to top ↑</a></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container"><span>MERL · CoRL 2026</span><span>* Correspondence: <a href="mailto:zhangrm27@mail.sysu.edu.cn">Ruimao Zhang</a></span><a href="https://github.com/li-wenzhan/MERL-project" target="_blank" rel="noopener">Website source <svg class="icon small"><use href="#i-up"/></svg></a></div></footer>
+  <dialog id="figure-dialog" class="figure-dialog" aria-labelledby="figure-dialog-title"><div class="dialog-top"><h2 id="figure-dialog-title">Research figure</h2><button class="icon-button dialog-close" aria-label="Close enlarged figure">×</button></div><div class="dialog-image-wrap"><img id="dialog-image" src="assets/images/method.webp" alt="Enlarged research figure"></div><p>Scroll to inspect the full figure. Press Esc to close.</p></dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>

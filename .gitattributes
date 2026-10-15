@@ -1,0 +1,13 @@
+* text=auto eol=lf
+assets/fonts/*-OFL.txt whitespace=-blank-at-eol
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.pdf binary
+*.png binary
+*.webp binary
+*.mp4 binary
+*.woff2 binary
